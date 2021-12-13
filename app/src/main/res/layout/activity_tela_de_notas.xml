@@ -40,7 +40,6 @@
         android:width="140dp"
         android:height="60dp"
         android:backgroundTint="#07B50E"
-        android:onClick="calcularMedia"
         android:text="Cadastrar"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

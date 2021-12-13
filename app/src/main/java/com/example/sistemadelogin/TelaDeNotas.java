@@ -7,15 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-public class TelaDeNotas extends AppCompatActivity {
+public class TelaDeNotas extends AppCompatActivity implements View.OnClickListener{
 
     private EditText nome, nota1, nota2, nota3, nota4;
-
-    private TextView showNome;
-    private TextView showMedia;
-    private TextView showSituacao;
 
     Button btnCancelar, btnCadastrar;
 
@@ -36,15 +31,11 @@ public class TelaDeNotas extends AppCompatActivity {
         });
 
         btnCadastrar.findViewById(R.id.botaoCadastrar);
+        btnCadastrar.setOnClickListener(this);
+    }
 
-        btnCadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent telaDeSituacao = new Intent(getApplicationContext(), TelaSituacao.class);
-                startActivity(telaDeSituacao);
-            }
-        });
+    public void onClick(View v) {
+        Intent it = new Intent(this, TelaSituacao.class);
 
         nota1 = findViewById(R.id.nota1);
         nota2 = findViewById(R.id.nota2);
@@ -52,12 +43,6 @@ public class TelaDeNotas extends AppCompatActivity {
         nota4 = findViewById(R.id.nota4);
         nome = findViewById(R.id.nomeAluno);
 
-        showNome = findViewById(R.id.showNome);
-        showMedia = findViewById(R.id.showMedia);
-        showSituacao = findViewById(R.id.showSituacao);
-    }
-
-    public void calcularMedia(View view) {
         float media;
         float x = 4;
 
@@ -68,14 +53,12 @@ public class TelaDeNotas extends AppCompatActivity {
 
         media = ( valor1 + valor2 + valor3 + valor4 ) / x;
 
-        showMedia.setText(String.valueOf(( valor1 + valor2 + valor3 + valor4 ) / x));
+        Bundle params = new Bundle();
 
-        if(media < 7){
-            showSituacao.setText("Infelizmente você reprovou");
-        }else if (media >= 7){
-            showSituacao.setText("Parabéns você está aprovado");
-        }else {
-            showSituacao.setText("Error 404");
-        }
+        params.putString("nomeAluno", nome.getText().toString());
+        params.putFloat("mediaAluno", media);
+
+        it.putExtras(params);
+        startActivity(it);
     }
 }
